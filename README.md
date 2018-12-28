@@ -1,11 +1,6 @@
 # KanbanBoardBackEnd
-npm i
+-- npm i
 
+-- Setup a env.json file with environments
 
-
-Setup a env.json file with environments
-
-
-
-
-npm app.js
+-- npm app.js
