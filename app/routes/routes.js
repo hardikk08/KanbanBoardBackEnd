@@ -15,4 +15,7 @@ module.exports = (app) => {
 
   // Get project with a stage Id
   app.get('/api/projects/:stageId', controller.getProjectByStageId)
+
+  // Change project stage
+  app.post('/api/changeProjectStage', controller.changeProjectStage)
 }

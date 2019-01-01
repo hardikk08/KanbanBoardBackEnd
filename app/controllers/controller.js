@@ -51,6 +51,7 @@ exports.deleteStage = (req, res) => {
                 message: "Stage not found with id " + req.params.stageId
             });
         }
+        ProjectModel.findOne({stageId: req.params.stageId}).remove().exec()
         res.send({message: "Stage deleted successfully!"});
     }).catch(err => {
         if(err.kind === 'ObjectId' || err.name === 'NotFound') {
@@ -74,7 +75,7 @@ exports.addProject = (req, res) => {
         stageId: req.body.stageId
     })
     // Find if the stage id exists and then proceed else fail
-    Stage.find({_id: req.body.stageId}, (err, docs) => {
+    StageModel.find({_id: req.body.stageId}, (err, docs) => {
         if(err) {
             return res.status(500).send({
                 message: err.message || "Cannot find the Stage in which you want to add Project"
@@ -104,4 +105,19 @@ exports.getProjectByStageId = (req, res) => {
             res.send(docs)
         }
     })
+}
+
+exports.changeProjectStage = (req, res) => {
+    ProjectModel.find({_id: req.body.newStageId}, function (err, doc) {
+        if (err) {console.log(err)}
+        doc[0].stageId = req.body.projectId
+        doc[0].save()
+        .then(data => {
+            res.send(data);
+        }).catch(err => {
+            res.status(500).send({
+                message: err.message || "Some error occurred while changing the Stage."
+            });
+        });
+      });
 }
